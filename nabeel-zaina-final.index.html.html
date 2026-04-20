@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nabeel & Zaina · Date Plans</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF8F4;
+    --card: #FFFFFF;
+    --dark: #2A1F1A;
+    --rose: #D4849A;
+    --rose-soft: #F2DDE3;
+    --rose-pale: #FDF5F7;
+    --blush: #F7EEF0;
+    --muted: #9A8880;
+    --warm: #7A6358;
+    --border: #EDE5DF;
+    --liked: #E8355A;
+    --sticky: #FFF9C4;
+    --sticky-border: #F0E68C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--dark);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAME GATE ── */
+  #nameGate {
+    position: fixed;
+    inset: 0;
+    background: var(--dark);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    transition: opacity 0.5s ease;
+  }
+
+  #nameGate.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .gate-box {
+    text-align: center;
+    max-width: 360px;
+    width: 100%;
+  }
+
+  .gate-emoji { font-size: 40px; margin-bottom: 20px; display: block; }
+
+  .gate-box h2 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #FBF8F4;
+    margin-bottom: 8px;
+  }
+
+  .gate-box h2 em { font-style: italic; color: var(--rose); }
+
+  .gate-sub {
+    font-size: 13px;
+    color: rgba(251,248,244,0.45);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .gate-input {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(212,132,154,0.3);
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    color: #FBF8F4;
+    margin-bottom: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: center;
+  }
+
+  .gate-input::placeholder { color: rgba(251,248,244,0.25); }
+  .gate-input:focus { border-color: var(--rose); }
+
+  .gate-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--rose);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .gate-btn:hover { background: #C0707F; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--dark);
+    padding: 64px 28px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 90% 70% at 50% -10%, rgba(212,132,154,0.2) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-from {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    background: rgba(212,132,154,0.12);
+    border: 1px solid rgba(212,132,154,0.25);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(38px, 8vw, 68px);
+    font-weight: 400;
+    color: #FBF8F4;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--rose); }
+
+  .hero-tagline {
+    font-size: 13px;
+    color: rgba(251,248,244,0.45);
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .hero-note {
+    max-width: 420px;
+    margin: 0 auto 40px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(212,132,154,0.2);
+    border-radius: 12px;
+    padding: 22px 26px;
+    position: relative;
+    text-align: left;
+  }
+
+  .hero-note p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: rgba(251,248,244,0.65);
+  }
+
+  .hero-note p strong { color: rgba(251,248,244,0.9); font-weight: 500; }
+
+  .hero-note .ps {
+    margin-top: 12px;
+    font-size: 12px;
+    color: rgba(251,248,244,0.3);
+    font-style: italic;
+    border-top: 1px solid rgba(212,132,154,0.15);
+    padding-top: 10px;
+  }
+
+  .scroll-hint {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(251,248,244,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  .bounce { animation: bounce 2s ease-in-out infinite; font-size: 16px; opacity: 0.4; }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* ── VIBE CHECK ── */
+  .vibe-section {
+    background: var(--blush);
+    border-bottom: 1px solid var(--rose-soft);
+    padding: 36px 24px;
+    text-align: center;
+  }
+
+  .vibe-title {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .vibe-title em { font-style: italic; color: var(--rose); }
+
+  .vibe-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .vibe-questions { display: flex; flex-direction: column; gap: 20px; max-width: 480px; margin: 0 auto; }
+
+  .vibe-q {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .vibe-q-label {
+    font-size: 13px;
+    color: var(--warm);
+    font-weight: 500;
+  }
+
+  .vibe-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .vibe-btn {
+    padding: 9px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    background: var(--card);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    color: var(--warm);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+
+  .vibe-btn:hover { border-color: var(--rose); color: var(--rose); }
+
+  .vibe-btn.selected {
+    background: var(--rose);
+    border-color: var(--rose);
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .vibe-result {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--rose);
+    font-style: italic;
+    min-height: 20px;
+    transition: all 0.3s;
+    font-family: 'Caveat', cursive;
+    font-size: 16px;
+  }
+
+  /* ── INFO BAR ── */
+  .infobar {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 13px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .infobar span { color: var(--rose); font-weight: 500; }
+
+  /* ── SECTION INTRO ── */
+  .section-intro {
+    padding: 40px 24px 4px;
+    text-align: center;
+  }
+
+  .section-intro h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 400;
+    color: var(--dark);
+  }
+
+  .section-intro h2 em { font-style: italic; color: var(--rose); }
+
+  .section-intro p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+    padding: 28px 20px 110px;
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 24px 20px;
+    position: relative;
+    transition: all 0.25s ease;
+    animation: popIn 0.5s ease both;
+  }
+
+  .card:hover {
+    border-color: var(--rose-soft);
+    box-shadow: 0 6px 24px rgba(212,132,154,0.12);
+    transform: translateY(-2px);
+  }
+
+  .card.loved {
+    border-color: var(--rose);
+    background: var(--rose-pale);
+    box-shadow: 0 6px 28px rgba(232,53,90,0.1);
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.97) translateY(12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .card:nth-child(1)  { animation-delay: 0.05s }
+  .card:nth-child(2)  { animation-delay: 0.10s }
+  .card:nth-child(3)  { animation-delay: 0.15s }
+  .card:nth-child(4)  { animation-delay: 0.20s }
+  .card:nth-child(5)  { animation-delay: 0.25s }
+  .card:nth-child(6)  { animation-delay: 0.30s }
+  .card:nth-child(7)  { animation-delay: 0.35s }
+  .card:nth-child(8)  { animation-delay: 0.40s }
+  .card:nth-child(9)  { animation-delay: 0.45s }
+  .card:nth-child(10) { animation-delay: 0.50s }
+
+  .card-num {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--border);
+    line-height: 1;
+    pointer-events: none;
+    transition: color 0.3s;
+  }
+
+  .card.loved .card-num { color: var(--rose-soft); }
+
+  .card-emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+
+  .card-title {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.3;
+    margin-bottom: 3px;
+    padding-right: 38px;
+  }
+
+  .card-vibe {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 18px;
+  }
+
+  /* ── STOPS ── */
+  .stop {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .card.loved .stop { background: rgba(255,255,255,0.65); }
+
+  .stop-icon { font-size: 18px; flex-shrink: 0; width: 26px; text-align: center; padding-top: 1px; }
+
+  .stop-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .stop-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .stop-desc {
+    font-size: 12px;
+    color: var(--warm);
+    line-height: 1.6;
+  }
+
+  /* ── STICKY NOTE ── */
+  .sticky {
+    background: var(--sticky);
+    border: 1px solid var(--sticky-border);
+    border-radius: 6px;
+    padding: 10px 14px 10px 16px;
+    margin-top: 12px;
+    position: relative;
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    color: #5a4a20;
+    line-height: 1.55;
+    transform: rotate(-0.5deg);
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.07);
+  }
+
+  .sticky::before {
+    content: '📌';
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    font-size: 14px;
+  }
+
+  .card.loved .sticky {
+    background: #FFF0C4;
+    border-color: #E8D070;
+  }
+
+  /* ── HEART ROW ── */
+  .heart-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .reaction {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.3s;
+    flex: 1;
+    padding-right: 10px;
+    line-height: 1.4;
+  }
+
+  .card.loved .reaction { opacity: 1; color: var(--rose); }
+
+  .heart-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .heart-btn:hover {
+    border-color: var(--rose);
+    background: var(--rose-pale);
+    transform: scale(1.1);
+  }
+
+  .card.loved .heart-btn {
+    background: var(--liked);
+    border-color: var(--liked);
+    animation: heartPop 0.4s ease;
+  }
+
+  @keyframes heartPop {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.35); }
+    65%  { transform: scale(0.88); }
+    100% { transform: scale(1); }
+  }
+
+  /* ── STICKY BAR ── */
+  .sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--dark);
+    border-top: 1px solid rgba(212,132,154,0.25);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  .bar-left { display: flex; flex-direction: column; gap: 2px; }
+
+  .bar-count {
+    font-size: 13px;
+    color: rgba(251,248,244,0.7);
+  }
+
+  .bar-count strong {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    color: var(--rose);
+    font-weight: 400;
+  }
+
+  .bar-quip {
+    font-size: 11px;
+    color: rgba(251,248,244,0.3);
+    font-style: italic;
+    min-height: 16px;
+    transition: all 0.3s;
+    font-family: 'Caveat', cursive;
+    font-size: 14px;
+  }
+
+  .submit-btn {
+    background: var(--rose);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .submit-btn:hover { background: #C0707F; transform: translateY(-1px); }
+
+  .submit-btn:disabled {
+    background: rgba(212,132,154,0.2);
+    color: rgba(251,248,244,0.25);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── CONFETTI ── */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  @keyframes confettiFall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── MODAL ── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(42,31,26,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 0;
+    max-width: 400px;
+    width: 100%;
+    transform: scale(0.95) translateY(16px);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .overlay.open .modal { transform: scale(1) translateY(0); }
+
+  /* Modal card header */
+  .modal-header {
+    background: var(--dark);
+    padding: 28px 28px 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .modal-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(212,132,154,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .modal-names {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #FBF8F4;
+    position: relative;
+  }
+
+  .modal-names em { font-style: italic; color: var(--rose); }
+
+  .modal-subtitle {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(251,248,244,0.3);
+    margin-top: 4px;
+    position: relative;
+  }
+
+  /* Modal body */
+  .modal-body { padding: 24px 28px; }
+
+  .modal-intro {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .modal-list {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px 0;
+    margin-bottom: 16px;
+  }
+
+  .modal-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--dark);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-item:last-child { border-bottom: none; }
+
+  .modal-item-num {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--rose);
+    font-weight: 500;
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  .modal-item-emoji { font-size: 16px; flex-shrink: 0; }
+
+  .modal-footer-note {
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .modal-close {
+    width: 100%;
+    padding: 13px;
+    background: var(--dark);
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .modal-close:hover { background: #3d2d26; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--dark);
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(212,132,154,0.1);
+  }
+
+  .footer .sig {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(251,248,244,0.35);
+    margin-bottom: 8px;
+  }
+
+  .footer p {
+    font-size: 11px;
+    color: rgba(251,248,244,0.18);
+    line-height: 1.8;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .grid { padding: 20px 14px 110px; gap: 14px; }
+    .card { padding: 22px 18px 16px; }
+    .modal-body { padding: 20px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAME GATE -->
+<div id="nameGate">
+  <div class="gate-box">
+    <span class="gate-emoji">🌶️</span>
+    <h2>Hey, <em>you.</em></h2>
+    <p class="gate-sub">Before we get into it —<br>what's your name?</p>
+    <input class="gate-input" id="nameInput" type="text" placeholder="Type your name here..." maxlength="20" />
+    <button class="gate-btn" onclick="submitName()">Let's go →</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-from">📍 From Mr Chilli Lane</div>
+  <h1>Nabeel <em>&</em> <span id="heroName">You</span></h1>
+  <p class="hero-tagline">10 dates. Planned. On a website. You're welcome.</p>
+
+  <div class="hero-note">
+    <p>
+      <strong>I pay attention.</strong> And I figured you're the kind of person who appreciates it when someone actually puts in effort — so instead of the usual "so what do you want to do" conversation, I just sorted it. Ten dates, all of Joburg. Scroll through, heart whatever looks good, and I'll handle the rest.
+    </p>
+    <p class="ps">P.S. I did not use AI for the feelings. Only the website.</p>
+  </div>
+
+  <div class="scroll-hint">
+    scroll down
+    <span class="bounce">↓</span>
+  </div>
+</section>
+
+<!-- VIBE CHECK -->
+<div class="vibe-section">
+  <h2 class="vibe-title"><span id="vibeNameTitle">Your</span> <em>Vibe Check</em></h2>
+  <p class="vibe-sub">Quick questions. No wrong answers. Just curious.</p>
+
+  <div class="vibe-questions">
+    <div class="vibe-q">
+      <div class="vibe-q-label">I'm more of a...</div>
+      <div class="vibe-options">
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe1')">🌿 Outdoorsy</button>
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe1')">🛋️ Indoorsy</button>
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe1')">🤷 Depends on my mood</button>
+      </div>
+    </div>
+
+    <div class="vibe-q">
+      <div class="vibe-q-label">My ideal date energy is...</div>
+      <div class="vibe-options">
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe2')">🌅 Slow & scenic</button>
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe2')">🎯 Fun & active</button>
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe2')">🍽️ Good food, good convo</button>
+      </div>
+    </div>
+
+    <div class="vibe-q">
+      <div class="vibe-q-label">When I get dressed up I want to feel...</div>
+      <div class="vibe-options">
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe3')">✨ Elegant</button>
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe3')">😎 Cool & casual</button>
+        <button class="vibe-btn" onclick="pickVibe(this, 'vibe3')">💅 Like the main character</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="vibe-result" id="vibeResult"></div>
+</div>
+
+<!-- INFO BAR -->
+<div class="infobar">
+  Tap <span>♡</span> on any dates you like · No limit · Hit <span>"Send my picks"</span> when done
+</div>
+
+<!-- DATES -->
+<div class="section-intro">
+  <h2>The <em>lineup</em></h2>
+  <p id="sectionSub">In no particular order. All of them are good. I'm just saying.</p>
+</div>
+
+<div class="grid">
+
+  <!-- 01 -->
+  <div class="card" data-id="1" data-title="Rooftop Sunset & Dinner" data-emoji="🌆">
+    <div class="card-num">01</div>
+    <span class="card-emoji">🌆</span>
+    <div class="card-title">Rooftop Sunset & Dinner</div>
+    <div class="card-vibe">Upscale · The fancy one</div>
+    <div class="stop">
+      <div class="stop-icon">🥂</div>
+      <div>
+        <div class="stop-label">First stop</div>
+        <div class="stop-name">Alto234 — 57th Floor, The Leonardo</div>
+        <div class="stop-desc">Highest rooftop in JHB. 360° views of the city at golden hour. Someone once proposed here. I'm just noting that for no reason.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🍽️</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">The Grillhouse — Alice Lane, Sandton</div>
+        <div class="stop-desc">JHB's most celebrated steakhouse. Beautiful setting on a higher floor, great views, impeccable food. Rated 4.5 from 3,000+ reviews. Proper dinner out.</div>
+      </div>
+    </div>
+    <div class="sticky">⚠️ Side effects may include: forgetting what time it is, not wanting to leave, and accidentally agreeing to a second date before the first one ends.</div>
+    <div class="heart-row">
+      <span class="reaction">good taste, honestly 💅</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 02 -->
+  <div class="card" data-id="2" data-title="Nature Walk & Dinner in the Park" data-emoji="🌿">
+    <div class="card-num">02</div>
+    <span class="card-emoji">🌿</span>
+    <div class="card-title">Nature Walk & Dinner in the Park</div>
+    <div class="card-vibe">Outdoorsy · The scenic one</div>
+    <div class="stop">
+      <div class="stop-icon">🌳</div>
+      <div>
+        <div class="stop-label">Afternoon</div>
+        <div class="stop-name">The Wilds Nature Reserve — Houghton</div>
+        <div class="stop-desc">A hidden forest trail with mosaic art and city viewpoints, right in the middle of Joburg. I'd bring a blanket. We'd sit for a while. It would be a whole vibe.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🌿</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">Truffles on the Park — Mushroom Farm Park</div>
+        <div class="stop-desc">Stunning bistro and sushi restaurant right inside the park. Beautiful setting, great food, warm atmosphere. Reviewers call it the perfect date lunch/dinner spot.</div>
+      </div>
+    </div>
+    <div class="sticky">📸 Fair warning: the park is so pretty you will take a hundred photos. I will pretend not to mind and secretly love it.</div>
+    <div class="heart-row">
+      <span class="reaction">nature + good food? she gets it 🌿</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 03 -->
+  <div class="card" data-id="3" data-title="Melrose Arch Stroll & Bistro Dinner" data-emoji="🏛️">
+    <div class="card-num">03</div>
+    <span class="card-emoji">🏛️</span>
+    <div class="card-title">Melrose Arch Stroll & Bistro Dinner</div>
+    <div class="card-vibe">Sophisticated · The strolling one</div>
+    <div class="stop">
+      <div class="stop-icon">🚶</div>
+      <div>
+        <div class="stop-label">Early Evening</div>
+        <div class="stop-name">Melrose Arch Piazza</div>
+        <div class="stop-desc">European-style open-air precinct with warm lights, lovely boutiques, great energy. We'd walk slowly and pretend we live in a movie. Standard.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🍽️</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">Aduna Bistro — The African Pride Hotel, Melrose</div>
+        <div class="stop-desc">Rated 4.8 from 500+ reviews — one of JHB's highest-rated restaurants. Beautiful hotel restaurant at Melrose Arch. Warm, elegant, genuinely exceptional service.</div>
+      </div>
+    </div>
+    <div class="sticky">🎬 Melrose Arch looks like a film set. We will look like main characters. This is not an accident. This is planning.</div>
+    <div class="heart-row">
+      <span class="reaction">she said yes to the stroll era 🎬</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 04 -->
+  <div class="card" data-id="4" data-title="Park Picnic & Dinner at Artistry" data-emoji="🧺">
+    <div class="card-num">04</div>
+    <span class="card-emoji">🧺</span>
+    <div class="card-title">Park Picnic & Dinner at Artistry</div>
+    <div class="card-vibe">Relaxed · The chill one</div>
+    <div class="stop">
+      <div class="stop-icon">☀️</div>
+      <div>
+        <div class="stop-label">Afternoon</div>
+        <div class="stop-name">Mushroom Farm Park — Sandton</div>
+        <div class="stop-desc">Beautiful quiet park in the heart of Sandton. I'd bring snacks, juice and a blanket. No agenda. Just actually talk. Revolutionary concept, I know.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🌙</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">Artistry JHB — Fredman Drive, Sandton</div>
+        <div class="stop-desc">Stunning restaurant with live music energy and beautiful sunset terrace views. Great food, great atmosphere. Reviewers say the aesthetic alone is worth it.</div>
+      </div>
+    </div>
+    <div class="sticky">🧃 I will absolutely over-pack the picnic basket. There will be too many snacks. This is a feature, not a bug.</div>
+    <div class="heart-row">
+      <span class="reaction">the practical romantic. she sees it 🧺</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 05 -->
+  <div class="card" data-id="5" data-title="Parkhurst Streets & Greek Dinner" data-emoji="🫒">
+    <div class="card-num">05</div>
+    <span class="card-emoji">🫒</span>
+    <div class="card-title">Parkhurst Streets & Greek Dinner</div>
+    <div class="card-vibe">Charming · The neighbourhood one</div>
+    <div class="stop">
+      <div class="stop-icon">🛍️</div>
+      <div>
+        <div class="stop-label">Evening</div>
+        <div class="stop-name">4th Avenue — Parkhurst</div>
+        <div class="stop-desc">JHB's most beautiful tree-lined street. Boutiques, coffee shops, great energy. We'd walk with no plan and see what happens. That's kind of the point.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🫒</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">Kolonaki Greek Kouzina — Parkhurst</div>
+        <div class="stop-desc">Authentic Greek right on the same street. Incredible dips, fresh grilled fish, desserts that make you reconsider your life choices. Reviewers say best meal in JHB.</div>
+      </div>
+    </div>
+    <div class="sticky">🚗 There's a scenic Westcliff night drive only 10 minutes away after dinner. Already noted for later. You're welcome.</div>
+    <div class="heart-row">
+      <span class="reaction">the stroll-into-dinner pipeline ✨</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 06 -->
+  <div class="card" data-id="6" data-title="Indie Cinema & Spanish Tapas" data-emoji="🎬">
+    <div class="card-num">06</div>
+    <span class="card-emoji">🎬</span>
+    <div class="card-title">Indie Cinema & Spanish Tapas</div>
+    <div class="card-vibe">Creative · The different one</div>
+    <div class="stop">
+      <div class="stop-icon">🎞️</div>
+      <div>
+        <div class="stop-label">Evening</div>
+        <div class="stop-name">The Bioscope — 44 Stanley</div>
+        <div class="stop-desc">JHB's most charming indie cinema. Vintage decor, tiny and intimate. Nothing like a mainstream cinema — they bring food to your seat. Genuinely lovely.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🥘</div>
+      <div>
+        <div class="stop-label">After the Film</div>
+        <div class="stop-name">La Boqueria — Parktown North</div>
+        <div class="stop-desc">Spanish tapas 10 minutes away. Great for sharing plates, beautiful decor. Reviewers consistently say perfect date night restaurant.</div>
+      </div>
+    </div>
+    <div class="sticky">🎭 I will let you pick the film. This is a significant sacrifice and I expect it to be acknowledged at some point.</div>
+    <div class="heart-row">
+      <span class="reaction">cinema then tapas?? she has range 🎬</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 07 -->
+  <div class="card" data-id="7" data-title="Adventure Golf & Spanish Tapas" data-emoji="⛳">
+    <div class="card-num">07</div>
+    <span class="card-emoji">⛳</span>
+    <div class="card-title">Adventure Golf & Spanish Tapas</div>
+    <div class="card-vibe">Fun · The competitive one</div>
+    <div class="stop">
+      <div class="stop-icon">⛳</div>
+      <div>
+        <div class="stop-label">Afternoon</div>
+        <div class="stop-name">Adventure Golf — Randburg</div>
+        <div class="stop-desc">Three beautifully landscaped mini-golf courses with water features and gardens. Competitive, funny, you will absolutely talk trash and I'm completely here for it.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🍕</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">La Boqueria — Parktown North</div>
+        <div class="stop-desc">Spanish tapas to wind down. Relaxed, warm atmosphere. Good for laughing about the game. Also good for pretending you weren't trying that hard.</div>
+      </div>
+    </div>
+    <div class="sticky">🏆 Official rules: loser of golf buys the first round of mocktails at dinner. Non-negotiable. Already written into law.</div>
+    <div class="heart-row">
+      <span class="reaction">already planning her victory speech ⛳</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 08 -->
+  <div class="card" data-id="8" data-title="Escape Room & Greek Dinner" data-emoji="🔐">
+    <div class="card-num">08</div>
+    <span class="card-emoji">🔐</span>
+    <div class="card-title">Escape Room & Greek Dinner</div>
+    <div class="card-vibe">Exciting · The bonding one</div>
+    <div class="stop">
+      <div class="stop-icon">🔑</div>
+      <div>
+        <div class="stop-label">Afternoon</div>
+        <div class="stop-name">The Gr8 Escape — Fourways</div>
+        <div class="stop-desc">Rated 4.9 from nearly 1,000 reviews. JHB's best escape room. Reviewers specifically say "did this before our date night dinner — brilliant." Solving puzzles together hits different.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🫒</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">Kolonaki Greek Kouzina — Parkhurst</div>
+        <div class="stop-desc">Warm Greek dinner to debrief. You'll spend most of it laughing about whatever happened in the room. Guaranteed conversation for the rest of the night.</div>
+      </div>
+    </div>
+    <div class="sticky">🧩 If we escape in time: I was clearly the reason. If we don't: it was a team effort. Nobody panic. We debrief over Greek food.</div>
+    <div class="heart-row">
+      <span class="reaction">she's already googling tactics 🔐</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 09 -->
+  <div class="card" data-id="9" data-title="Painting Class & Dinner" data-emoji="🎨">
+    <div class="card-num">09</div>
+    <span class="card-emoji">🎨</span>
+    <div class="card-title">Painting Class & Dinner</div>
+    <div class="card-vibe">Creative · The artsy one</div>
+    <div class="stop">
+      <div class="stop-icon">🖌️</div>
+      <div>
+        <div class="stop-label">Afternoon</div>
+        <div class="stop-name">The Creatory — Greenside</div>
+        <div class="stop-desc">Guided painting class where we both paint the same thing and compare. No experience needed. The whole point is to be creative, goofy, and see who's actually better.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">🌙</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">Artistry JHB — Fredman Drive, Sandton</div>
+        <div class="stop-desc">Beautiful Sandton restaurant with live music energy. Closes off a creative afternoon in proper style. The contrast of afternoon art and evening elegance is the whole vibe.</div>
+      </div>
+    </div>
+    <div class="sticky">🖼️ Both paintings will be kept. One will look like a child made it. I'm not saying which one. But I have suspicions.</div>
+    <div class="heart-row">
+      <span class="reaction">she's already better at this than me 🎨</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card" data-id="10" data-title="Treetop Adventure & Fine Dining" data-emoji="🌳">
+    <div class="card-num">10</div>
+    <span class="card-emoji">🌳</span>
+    <div class="card-title">Treetop Adventure & Fine Dining</div>
+    <div class="card-vibe">Active · The wildcard</div>
+    <div class="stop">
+      <div class="stop-icon">🧗</div>
+      <div>
+        <div class="stop-label">Morning</div>
+        <div class="stop-name">Acrobranch — Melrose</div>
+        <div class="stop-desc">Tree-top obstacle course in a lush park near Melrose. Challenging, fun, slightly terrifying in the best way. Getting out of your comfort zone together is kind of the whole point.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="stop-icon">✨</div>
+      <div>
+        <div class="stop-label">Dinner</div>
+        <div class="stop-name">The Grillhouse — Alice Lane, Sandton</div>
+        <div class="stop-desc">After a morning in the trees, we'd clean up and end the day properly. The contrast of treetops to a nice dinner is very deliberate. You'll have earned every bite.</div>
+      </div>
+    </div>
+    <div class="sticky">💅 The dinner reservation is the motivation to finish the obstacle course. It works. Trust the process. I've thought about this.</div>
+    <div class="heart-row">
+      <span class="reaction">adventures AND fine dining?? this one gets it 🌳</span>
+      <button class="heart-btn" onclick="toggleLove(this)"><span>♡</span></button>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p class="sig">— Made with actual effort, from Mr Chilli Lane 🌶️</p>
+  <p>Nabeel & <span id="footerName">You</span> · Johannesburg · All good vibes</p>
+</div>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <div class="bar-left">
+    <div class="bar-count"><span id="barName">She</span> has approved <strong id="countNum">0</strong> date<span id="plural"></span></div>
+    <div class="bar-quip" id="barQuip">tap a heart to get started ♡</div>
+  </div>
+  <button class="submit-btn" id="submitBtn" onclick="openModal()" disabled>
+    Send my picks 🌸
+  </button>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-names">Nabeel <em>&</em> <span id="modalName">You</span></div>
+      <div class="modal-subtitle">Date Picks · Joburg</div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-intro">Here are your favourites.<br>Screenshot this and send it to Nabeel. 📸</p>
+      <div class="modal-list" id="modalList"></div>
+      <p class="modal-footer-note" id="modalFooterNote">He will pretend to be surprised. He won't be.</p>
+      <button class="modal-close" onclick="closeModal()">Done 🤍</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const loved = new Set();
+  let userName = 'You';
+
+  const quips = [
+    "not bad at all 👀",
+    "she knows what she wants 💅",
+    "Nabeel is taking notes 📝",
+    "the list is growing 🌸",
+    "excellent decision-making 🎯",
+    "he's going to act so surprised 😄",
+    "not messing around ✨",
+    "all of them is also valid 🤷",
+    "this is going well 🌶️",
+    "Nabeel owes you already 😂",
+    "truly impeccable taste 👑"
+  ];
+
+  const vibeResponses = {
+    vibe1: {
+      '🌿 Outdoorsy': "noted — dates 2, 5 and 10 are calling your name 🌿",
+      '🛋️ Indoorsy': "noted — dates 6, 8 and 9 were made for you 🎬",
+      '🤷 Depends on my mood': "honestly the most valid answer. pick whatever looks good 😄"
+    },
+    vibe2: {
+      '🌅 Slow & scenic': "dates 2, 3 and 5 have your name on them ✨",
+      '🎯 Fun & active': "dates 7, 8 and 10 — you're going to have a great time 🎯",
+      '🍽️ Good food, good convo': "honestly every date qualifies but especially 1, 3 and 5 🍽️"
+    },
+    vibe3: {
+      '✨ Elegant': "dates 1 and 3 are your people. make the reservation.",
+      '😎 Cool & casual': "dates 4, 5 and 6 — low key but still a great time 😎",
+      '💅 Like the main character': "every date. you ARE the main character. that's final. 💅"
+    }
+  };
+
+  const vibeSelections = {};
+
+  function submitName() {
+    const input = document.getElementById('nameInput').value.trim();
+    userName = input || 'You';
+    applyName(userName);
+    const gate = document.getElementById('nameGate');
+    gate.classList.add('fade-out');
+    setTimeout(() => gate.style.display = 'none', 500);
+  }
+
+  document.getElementById('nameInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitName();
+  });
+
+  function applyName(name) {
+    document.getElementById('heroName').textContent = name;
+    document.getElementById('footerName').textContent = name;
+    document.getElementById('modalName').textContent = name;
+    document.getElementById('barName').textContent = name;
+    document.getElementById('vibeNameTitle').textContent = name + "'s";
+    document.getElementById('sectionSub').textContent = "In no particular order. All of them are good, " + name + ". I'm just saying.";
+    document.getElementById('modalFooterNote').textContent = "He will pretend to be surprised by your choices, " + name + ". He won't be.";
+    document.title = "Nabeel & " + name + " · Date Plans";
+  }
+
+  function pickVibe(btn, group) {
+    document.querySelectorAll(`.vibe-btn`).forEach(b => {
+      if (b.closest('.vibe-q') === btn.closest('.vibe-q')) b.classList.remove('selected');
+    });
+    btn.classList.add('selected');
+    vibeSelections[group] = btn.textContent;
+    updateVibeResult();
+  }
+
+  function updateVibeResult() {
+    const keys = Object.keys(vibeSelections);
+    if (keys.length === 0) return;
+    const last = keys[keys.length - 1];
+    const val = vibeSelections[last];
+    const response = vibeResponses[last]?.[val];
+    if (response) {
+      document.getElementById('vibeResult').textContent = response;
+    }
+  }
+
+  function toggleLove(btn) {
+    const card = btn.closest('.card');
+    const id = card.dataset.id;
+    if (loved.has(id)) {
+      loved.delete(id);
+      card.classList.remove('loved');
+      btn.querySelector('span').textContent = '♡';
+    } else {
+      loved.add(id);
+      card.classList.add('loved');
+      btn.querySelector('span').textContent = '♥';
+    }
+    updateBar();
+  }
+
+  function updateBar() {
+    const n = loved.size;
+    document.getElementById('countNum').textContent = n;
+    document.getElementById('plural').textContent = n === 1 ? '' : 's';
+    document.getElementById('submitBtn').disabled = n === 0;
+    document.getElementById('barQuip').textContent = n === 0
+      ? 'tap a heart to get started ♡'
+      : quips[(n - 1) % quips.length];
+  }
+
+  function launchConfetti() {
+    const colors = ['#D4849A','#F2DDE3','#FFD700','#FF6B9D','#C9A45A','#A8E6CF','#FFB347'];
+    const shapes = ['circle', 'rect'];
+    for (let i = 0; i < 80; i++) {
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.className = 'confetti-piece';
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const size = Math.random() * 10 + 6;
+        el.style.cssText = `
+          left: ${Math.random() * 100}%;
+          width: ${size}px;
+          height: ${size}px;
+          background: ${color};
+          border-radius: ${shape === 'circle' ? '50%' : '2px'};
+          animation-duration: ${Math.random() * 2 + 2}s;
+          animation-delay: ${Math.random() * 0.5}s;
+        `;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+      }, i * 20);
+    }
+  }
+
+  function openModal() {
+    if (loved.size === 0) return;
+    launchConfetti();
+
+    const list = document.getElementById('modalList');
+    list.innerHTML = '';
+    [...loved].sort((a, b) => +a - +b).forEach(id => {
+      const card = document.querySelector(`.card[data-id="${id}"]`);
+      const div = document.createElement('div');
+      div.className = 'modal-item';
+      div.innerHTML = `
+        <span class="modal-item-num">${String(id).padStart(2,'0')}</span>
+        <span class="modal-item-emoji">${card.dataset.emoji}</span>
+        <span>${card.dataset.title}</span>
+      `;
+      list.appendChild(div);
+    });
+
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('overlay')) closeModal();
+  }
+
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>
